@@ -1,0 +1,139 @@
+{
+  "project": "FP8 post-training quantization (PTQ) study",
+  "date_saved": "2026-11-20",
+  "last_updated": "2026-11-20: FP8 PTQ study COMPLETE (Steps 0-8): lm-eval, stats, summary tables, 13 PNG+SVG plots, docs/findings.md, and plan.md all finalized; ready for INT8 phase or optional MMLU 5-shot pass",
+  "workdir": "E:\\quantt",
+  "run_from": "E:\\quantt\\fp_8",
+  "environment": {
+    "os": "Windows 11, PowerShell",
+    "venv": "E:\\quantt\\venv",
+    "gpu": "Modal L4 (authorized by user)",
+    "modal_volume": "quant-models mounted at /vol",
+    "images": {"quant_image": "llmcompressor 0.15.0", "vllm_image": "vLLM 0.34.0, lm-eval 0.4.13"},
+    "windows_note": "Set $env:PYTHONUTF8 = \"1\" before modal run (charmap error otherwise)"
+  },
+  "constraints": [
+    "PTQ ONLY: no QAT, fine-tuning, gradients, LoRA or distillation",
+    "Baseline must be BF16 (never FP16); quantized variants derive from it",
+    "Claude must NOT run modal commands: give the command, user runs it and pastes output",
+    "FP8 first, INT8 later"
+  ],
+  "model": {
+    "id": "Qwen/Qwen2.5-3B",
+    "short": "qwen2.5-3b",
+    "layers": 36,
+    "hidden_size": 2048,
+    "tied_embeddings": true,
+    "expected_quantized_linears": 252,
+    "baseline_path": "/vol/models/qwen2.5-3b-bf16"
+  },
+  "recipes": {
+    "w8a16_pt": {"weights": "fp8 per-tensor", "activations": "bf16"},
+    "w8a16_pc": {"weights": "fp8 per-channel", "activations": "bf16"},
+    "w8a8_pt": {"weights": "fp8 per-tensor", "activations": "fp8 per-tensor dynamic"},
+    "w8a8_pc": {"weights": "fp8 per-channel", "activations": "fp8 per-token dynamic (FP8_DYNAMIC preset)"},
+    "w8a8_pt_static": {"weights": "fp8 per-tensor", "activations": "fp8 per-tensor static (reuses Track B checkpoint scales)"}
+  },
+  "checkpoint_recipes": {
+    "w8a16_pt": "FP8 per-tensor weights, BF16 activations",
+    "w8a16_pc": "FP8 per-channel weights, BF16 activations",
+    "w8a8_pc": "FP8 per-channel weights, dynamic per-token FP8 activations",
+    "w8a8_pt_dyn": "FP8 per-tensor weights, dynamic per-tensor FP8 activations (mirrors Track A w8a8_pt)",
+    "w8a8_pt_static": "FP8 per-tensor weights and calibrated static per-tensor FP8 activations"
+  },
+  "metrics": [
+    "loss", "perplexity", "KL(P_bf16||P_quant) mean/median/p90/p99/max", "top-1 agreement",
+    "noise floor (bf16 vs fp16 cast)", "model size", "compression % = 1 - size_q/size_bf16",
+    "lm-eval: hellaswag, arc_easy, arc_challenge, winogrande, piqa", "graph-pattern analysis"
+  ],
+  "tracks": {
+    "A": "Simulated fake-quant in PyTorch (sim_eval.py): full-vocab KL, loss, per-layer stats",
+    "B": "Real llm-compressor checkpoints served in vLLM (quantize_fp8.py): real size, speed, lm-eval",
+    "cross_check": "Perplexity should match between tracks"
+  },
+  "test_data": {
+    "location": "/vol/data",
+    "ppl_wikitext": "64x2048, WikiText-2 test",
+    "kl_chat": "64x2048, UltraChat test_sft",
+    "calib_chat": "512x2048, UltraChat train_sft seed 42 (activation range calibration only)",
+    "prompts": "25 fixed prompts",
+    "manifest": "E:\\quantt\\results\\data_manifest.json"
+  },
+  "files": {
+    "plan.md": "master plan",
+    "fp_8/config.py": "model, Track A RECIPES, Track B CHECKPOINT_RECIPES, FORMATS, assert_inference_only",
+    "fp_8/modal_app.py": "app, volume, images, smoke tests",
+    "fp_8/download_model.py": "done",
+    "fp_8/prepare_data.py": "done",
+    "fp_8/sanity_check.py": "BF16 and all four Track B FP8 checkpoints sanity-checked in vLLM; W8A16 checkpoints use Marlin; w8a8_pt_static loaded in 96.8s, generated all 5 prompts, exact greedy match 2/5",
+    "fp_8/sim_eval.py": "Track A 64-window sweep done for 4 recipes + none + fp16cast; updated to support w8a8_pt_static and save per-window losses",
+    "fp_8/quantize_fp8.py": "Track B checkpoint recipes; updated with w8a8_pt_dyn (dynamic per-tensor activations)",
+    "fp_8/vllm_common.py": "Shared vLLM loader with Marlin W8A16 pin, kernel log capture, GPU capability & memory reporting",
+    "fp_8/validate_sim.py": "Step 1 validation gate comparing Track A fake-quant weights vs Track B dequantized checkpoint weights",
+    "fp_8/eval_ppl_vllm.py": "Step 2 (E1) Track B perplexity/loss on frozen windows via vLLM prompt_logprobs=0",
+    "fp_8/layer_diag.py": "Step 4 (E3) per-layer diagnostics: weights, acts, layererr, sensitivity",
+    "fp_8/bench_speed.py": "Step 6 (B1) vLLM speed & memory benchmark across 8 (batch x input) cells",
+    "fp_8/eval_lm.py": "Step 7 (E4) 0-shot lm-eval wrapper (5 tasks + per-example samples.npz)",
+    "fp_8/stats.py": "Step 8 (R) bootstrap CIs, paired bootstrap, exact McNemar test, result loader",
+    "fp_8/make_summary.py": "Step 8 (R) generates results/summary/summary.md & .csv + scientific consistency gates",
+    "fp_8/make_plots.py": "Step 8 (R) generates all 13 PNG + SVG plots in results/plots/",
+    "docs/findings.md": "Step 8 (R) full hypothesis verdicts, statistical evidence, and L4 deployment recommendation",
+    "requirements.txt": "modal, numpy, pandas, matplotlib, tabulate (installed in venv)"
+  },
+  "status": {
+    "done": [
+      "Repo migrated to 3B / BF16 / recipe table",
+      "3B model downloaded to Volume",
+      "Frozen test data built and manifest saved",
+      "BF16 sanity check passed in vLLM (load 105.6s)",
+      "Track A baseline and four FP8 recipes plus fp16cast evaluated on 64 windows across WikiText and chat; baseline self-check KL=0 and top1=1",
+      "Track B w8a16_pc quantization completed: 252 Linear layers, 252 weight scales, 44.9% smaller than BF16",
+      "Track B w8a16_pc vLLM sanity check passed with Marlin: load 109.6s, all 5 prompts generated, 4/5 exact greedy token matches to BF16",
+      "Track B w8a16_pt quantization completed: 252 Linear layers, 252 weight scales, per-tensor FP8 weights, 45.0% smaller than BF16",
+      "Track B w8a16_pt vLLM sanity check passed with Marlin: load 121.6s, all 5 prompts generated, 2/5 exact greedy token matches to BF16",
+      "Track B w8a8_pc quantization completed: float-quantized config, FP8 per-channel weights and dynamic per-token FP8 activations, 252 weight scales, 44.9% compression",
+      "Track B w8a8_pc vLLM sanity check passed: load 129.0s, all 5 prompts generated, 3/5 exact greedy token matches to BF16",
+      "w8a8_pt run completed calibration on calib_chat and saved static per-tensor activations (dynamic=false, 252 input scales); discovered its ID incorrectly matched Track A's dynamic w8a8_pt; code now separates it as w8a8_pt_static",
+      "Track B w8a8_pt_static quantization rerun completed with corrected ID: static per-tensor FP8 weights/activations, 252 weight scales, 252 input scales, 45.0% smaller than BF16",
+      "Track B w8a8_pt_static vLLM sanity check passed: load 96.8s, generated all five prompts, exact greedy matches 2/5; SIGTERM lines were normal engine teardown after successful completion",
+      "Local numpy dependency fixed",
+      "Eval Plan Step 0: archived stale size_w8a8_pt.json, updated config.py/modal_app.py/quantize_fp8.py/sim_eval.py, created vllm_common.py, validate_sim.py, eval_ppl_vllm.py (all local syntax/config checks passed)",
+      "Eval Plan Step 0b: Track B w8a8_pt_dyn quantization completed: 252 weight scales, 0 input scales, dynamic per-tensor FP8 activations, 3397.42 MB (45.0% compression), saved results/size_w8a8_pt_dyn.json",
+      "Eval Plan Step 1 (validation gate): validate_sim.py completed on w8a16_pc & w8a16_pt (252 layers); 97.0% exact FP8 match, RMSE 4.0e-4, max scale rel diff 3.32e-3 — explained by llm-compressor storing weight_scale in BF16 (1 ULP = 3.9e-3) vs FP32 in Track A; both tracks match mathematically",
+      "Eval Plan Step 2-smoke: eval_ppl_vllm.py --fmts bf16 --smoke passed on L4 (cc=8.9, load=86.0s, 4 WikiText windows / 8188 tokens, loss=2.1647, ppl=8.712); vLLM 0.34 prompt_logprobs API verified",
+      "Eval Plan Step 2 (E1 full): eval_ppl_vllm.py --fmts all completed (64 WikiText + 64 chat windows, saved to results/trackb_ppl/); WikiText PPL: bf16=7.782, w8a16_pc=7.804 (+0.022), w8a16_pt=7.809 (+0.027), w8a8_pc=7.834 (+0.052), w8a8_pt_dyn=7.855 (+0.073), w8a8_pt_static=7.866 (+0.084); Chat PPL: bf16=4.144, w8a16_pc=4.157, w8a16_pt=4.165, w8a8_pc=4.180, w8a8_pt_dyn=4.183, w8a8_pt_static=4.193; exact monotonic precision ordering and close match to Track A",
+      "Eval Plan Step 3 (E2): sim_eval.py --recipes w8a8_pt_static completed (Track A, 252 layers, 64 windows): WikiText PPL 7.778->7.861 (dLoss +0.0107), KL mean 0.01524, p99 0.127, top1 0.9403; chat PPL 4.145->4.189, KL 0.01344, top1 0.9481. Cross-check vs Track B w8a8_pt_static (7.866): diff 0.005 PPL, tracks agree. Static is worse than dynamic per-tensor (KL 0.0114) and per-channel (0.0105)",
+      "Eval Plan Step 4 prep: created fp_8/layer_diag.py (parts weights/acts/layererr/sensitivity + --smoke), py_compile OK",
+      "Eval Plan Step 4 smoke: layer_diag.py --part weights --smoke passed (14 matrices; mean SQNR pt 31.54 dB vs pc 31.57 dB; flush-to-zero pt 2.8e-4 vs pc 2.1e-5; subnormal pt 3.9e-3 vs pc 3.5e-4; layer-1 up_proj has per-channel amax spread 44.5x) and --part layererr --smoke passed (w8a16_pt accumulated final-block cos 0.99892, rel_err 0.0444)",
+      "Eval Plan Step 4 (E3 full) COMPLETE: all 4 parts ran, saved to results/diag/ (weights.json, weight_samples.npz, acts.json, layer_err.json, sensitivity.json). weights: 252 matrices, mean SQNR pt 31.54 dB vs pc 31.56 dB (no meaningful difference), flush-to-zero pt 5.9e-5 vs pc 6.9e-6, subnormal pt 8.7e-4 vs pc 1.5e-4; biggest per-channel amax spread in early up_proj (L1 44.5x, L3 29.5x, L2 24.9x). acts: massive activation outliers in down_proj inputs of early layers (L2 outlier factor 1.6e7, L1 5.9e5, L3 5.4e5, L4 9.1e4; also L35 2.0e4, L30 1.7e4) -> explains why per-tensor/static activation scaling hurts. layererr accumulated final-block cos / rel_err: w8a16_pt 0.99877/0.0483, w8a16_pc 0.99880/0.0483, w8a8_pc 0.99785/0.0644, w8a8_pt 0.99765/0.0673, w8a8_pt_static 0.99702/0.0756. sensitivity: all-layers KL w8a8_pt 0.01157, w8a8_pc 0.01106; most sensitive layers L35, L0, L2 (then L30/31); most sensitive projection down_proj (pt 0.00452, pc 0.00400) then gate/up -> candidates to keep in BF16 for mixed precision",
+      "Eval Plan Step 5 (E5) COMPLETE: sanity_check.py --fmts all ran 25 prompts x 128 greedy tokens, saved to results/sanity25/ (per-format json + agreement_vs_bf16.json). Exact matches vs BF16 / mean matching-prefix fraction: w8a16_pt 8/25 / 0.582, w8a16_pc 7/25 / 0.468, w8a8_pc 6/25 / 0.394, w8a8_pt_dyn 6/25 / 0.484, w8a8_pt_static 7/25 / 0.453. Greedy exact-match is chaotic (one near-tie token flip diverges the rest) so it is only a qualitative spot-check and does not follow the KL/PPL ordering strictly; rely on PPL/KL/lm-eval for ranking",
+      "Eval Plan Step 6 (B1) COMPLETE: bench_speed.py --fmts all ran 8-cell grid (batch 1/8/32/128 x input 128/512, 128 out tokens) for 6 formats on L4, saved to results/bench/<fmt>.json. Decode TPOT at bs=1: bf16 25.55 ms, w8a16_pt/pc 14.66 (1.74x faster), w8a8_pc/pt_dyn 16.4, w8a8_pt_static 16.0 (1.6x). Peak throughput bs=128 in=128 (out tok/s): bf16 2504, w8a16_pt 2891, w8a16_pc 2860, w8a8_pc 3374, w8a8_pt_dyn 3397, w8a8_pt_static 3427 (+37%); bs=128 in=512: bf16 1223, w8a16 1220-1222 (parity), w8a8 1600-1615 (+32%). Prefill bs=128 in=512: bf16 7.72s, w8a16 8.74s (slower, dequant overhead), w8a8 5.78s (1.34x faster). Crossover: W8A16 (Marlin) best for decode at bs<=32, W8A8 (native FP8 tensor cores) best at large batch/prefill. per-tensor vs per-channel and static vs dynamic differ <2% in speed. Caveats: logged weights=None and empty kernel_log because EngineCore subprocess logs are not captured by python logger -> weight GiB must come from results/size_*.json; mem_used_after (~19.3-19.6 GiB) is ~constant because GPU_MEM_UTIL=0.85 pre-allocates, so it is not a memory-saving metric; KV-cache capacity not captured yet",
+      "Eval Plan Step 7 prep: created fp_8/eval_lm.py (lm-eval VLLM wrapper with Marlin KernelConfig, 5 tasks 0-shot, per-example samples npz, --smoke, --tasks/--fewshot), py_compile OK",
+      "Eval Plan Step 7 (E4) COMPLETE: eval_lm.py --fmts all ran 0-shot across all 5 tasks (hellaswag, arc_easy, arc_challenge, winogrande, piqa; 16,695 examples) for all 6 formats with zero errors, saved to results/lm_eval/. Avg acc: bf16 68.89%, w8a16_pt 69.09%, w8a16_pc 69.09%, w8a8_pc 69.01%, w8a8_pt_dyn 69.32%, w8a8_pt_static 69.16%. Exact McNemar vs BF16: no significant drop on any task for w8a16_pt, w8a16_pc, w8a8_pc; HellaSwag drops for w8a8_pt_dyn (-0.30 pp, p<0.05) and w8a8_pt_static (-0.43 pp, p<0.01)",
+      "Eval Plan Step 8 (R) COMPLETE: stats.py (--selftest OK), make_summary.py (results/summary/summary.md & .csv; 6/6 automated gates PASS, Gate 6 SKIP due to EngineCore subprocess logging), make_plots.py (all 13 PNG+SVG plots = 26 files in results/plots/), docs/findings.md written, plan.md Section 1 updated"
+    ],
+    "next_step": "FP8 PTQ study COMPLETE. Review results/plots/ and docs/findings.md; optionally run MMLU 5-shot (Step 7b) or proceed to INT8 PTQ study (int_8/)",
+    "pending": [
+      "Optional Step 7b: modal run eval_lm.py --fmts all --tasks mmlu --fewshot 5",
+      "INT8 PTQ study (int_8/) using the same harness"
+    ]
+  },
+  "open_risks": [
+    "vLLM V1 EngineCore runs in a subprocess whose logs bypass Python's MainProcess logger, so kernel_log and runtime model_weight_gib were not captured (weight GiB taken from results/size_*.json; W8A8 FP8 Tensor Core path verified via 1.34x prefill speedup)",
+    "The default W8A16 Humming backend failed NVRTC JIT compilation on L4; the Marlin override resolved it cleanly for all W8A16 runs (cc=8.9 confirmed)"
+  ],
+  "resume_here": {
+    "working_directory": "E:\\quantt",
+    "completed_through": "Eval Plan Steps 0-8 COMPLETE (full FP8 PTQ evaluation, benchmarks, 13 plots, summary tables, docs/findings.md)",
+    "run_next": "Optional: modal run eval_lm.py --fmts all --tasks mmlu --fewshot 5 | Or start INT8 PTQ phase in int_8/",
+    "what_to_do": "Inspect results/plots/, results/summary/summary.md, and docs/findings.md; decide whether to run optional MMLU 5-shot or move on to INT8."
+  },
+  "errors_fixed": [
+    "charmap error: PYTHONUTF8=1",
+    "wikitext dataset id: use Salesforce/wikitext",
+    "prepare_data token shortage: render chat template to text then tokenize",
+    "sanity_check f-string newline SyntaxError",
+    "sim_eval local ModuleNotFoundError numpy: installed requirements",
+    "vLLM W8A16 FP8 default Humming backend failed NVRTC JIT compilation on L4; sanity_check pins only w8a16_fp8 to Marlin, which loaded and generated successfully"
+  ]
+}

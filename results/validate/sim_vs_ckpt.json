@@ -1,0 +1,44 @@
+{
+  "w8a16_pc": {
+    "spec": {
+      "w": "fp8",
+      "a": "bf16",
+      "wscale": "per_channel",
+      "ascale": "none"
+    },
+    "ckpt_dir": "/vol/models/qwen2.5-3b-w8a16-pc",
+    "layers_checked": 252,
+    "total_elems": 2774532096,
+    "exact_fp8_frac": 0.9699268928550899,
+    "exact_bf16_frac": 0.7414215924788494,
+    "max_abs_diff_f32": 0.0690569281578064,
+    "rmse_f32": 0.00039958030078248564,
+    "max_scale_rel_diff": 0.0033221577759832144,
+    "worst_layer": {
+      "name": "model.layers.21.mlp.down_proj",
+      "max_abs_diff": 0.0690569281578064
+    },
+    "passed": false
+  },
+  "w8a16_pt": {
+    "spec": {
+      "w": "fp8",
+      "a": "bf16",
+      "wscale": "per_tensor",
+      "ascale": "none"
+    },
+    "ckpt_dir": "/vol/models/qwen2.5-3b-w8a16-pt",
+    "layers_checked": 252,
+    "total_elems": 2774532096,
+    "exact_fp8_frac": 0.9690680049714588,
+    "exact_bf16_frac": 0.7286804135063788,
+    "max_abs_diff_f32": 0.0690569281578064,
+    "rmse_f32": 0.0004032619633383387,
+    "max_scale_rel_diff": 0.0032715543638914824,
+    "worst_layer": {
+      "name": "model.layers.21.mlp.down_proj",
+      "max_abs_diff": 0.0690569281578064
+    },
+    "passed": false
+  }
+}

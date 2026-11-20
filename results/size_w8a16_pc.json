@@ -1,0 +1,40 @@
+{
+  "recipe": "w8a16_pc",
+  "spec": {
+    "w": "fp8",
+    "a": "bf16",
+    "wscale": "per_channel",
+    "ascale": "none"
+  },
+  "path": "/vol/models/qwen2.5-3b-w8a16-pc",
+  "quant_bytes": 3399489312,
+  "bf16_bytes": 6171926992,
+  "size_ratio": 0.5507986916252233,
+  "compression_pct": 44.920130837477664,
+  "bytes_by_dtype": {
+    "torch.bfloat16": 624877568,
+    "torch.float8_e4m3fn": 2774532096
+  },
+  "elems_by_dtype": {
+    "torch.bfloat16": 312438784,
+    "torch.float8_e4m3fn": 2774532096
+  },
+  "weight_scale_tensors": 252,
+  "input_scale_tensors": 0,
+  "expected_linears": 252,
+  "format": "naive-quantized",
+  "ignore": [
+    "lm_head"
+  ],
+  "config_groups": {
+    "group_0": {
+      "weights": {
+        "type": "float",
+        "num_bits": 8,
+        "strategy": "channel",
+        "dynamic": false
+      },
+      "acts": null
+    }
+  }
+}

@@ -1,0 +1,792 @@
+{
+  "w8a16_pt": {
+    "exact_matches": 8,
+    "n": 25,
+    "exact_rate": 0.32,
+    "mean_prefix_frac": 0.5819998927527898,
+    "per_prompt": [
+      {
+        "prompt": "What is the capital of France? Answer in one sentence.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Who wrote the novel 'Pride and Prejudice'?",
+        "exact": false,
+        "first_divergence": 18,
+        "prefix_frac": 0.8181818181818182
+      },
+      {
+        "prompt": "What is the boiling point of water at sea level in Celsius?",
+        "exact": false,
+        "first_divergence": 16,
+        "prefix_frac": 0.8
+      },
+      {
+        "prompt": "Name the largest planet in our solar system and one fact about it.",
+        "exact": false,
+        "first_divergence": 37,
+        "prefix_frac": 0.9024390243902439
+      },
+      {
+        "prompt": "In what year did World War II end?",
+        "exact": false,
+        "first_divergence": 11,
+        "prefix_frac": 0.6875
+      },
+      {
+        "prompt": "Explain what quantization of a neural network means in two sentences.",
+        "exact": false,
+        "first_divergence": 30,
+        "prefix_frac": 0.25210084033613445
+      },
+      {
+        "prompt": "Explain the difference between a process and a thread.",
+        "exact": false,
+        "first_divergence": 3,
+        "prefix_frac": 0.02830188679245283
+      },
+      {
+        "prompt": "Why is the sky blue? Keep it under three sentences.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "What does a hash table do and why is lookup fast?",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.42727272727272725
+      },
+      {
+        "prompt": "Summarize what overfitting is in machine learning.",
+        "exact": false,
+        "first_divergence": 20,
+        "prefix_frac": 0.22727272727272727
+      },
+      {
+        "prompt": "Write a Python function that returns the n-th Fibonacci number.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that checks whether a string is a palindrome.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 highest salaries from a table named employees.",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.5465116279069767
+      },
+      {
+        "prompt": "Write a JavaScript function that reverses an array without using reverse().",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that merges two sorted lists into one sorted list.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "What is 17 * 23? Show the calculation.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+        "exact": false,
+        "first_divergence": 114,
+        "prefix_frac": 0.890625
+      },
+      {
+        "prompt": "A box has 3 red and 5 blue balls. What is the probability of drawing a red ball?",
+        "exact": false,
+        "first_divergence": 9,
+        "prefix_frac": 0.0703125
+      },
+      {
+        "prompt": "Solve for x: 3x + 7 = 25.",
+        "exact": false,
+        "first_divergence": 17,
+        "prefix_frac": 0.1328125
+      },
+      {
+        "prompt": "Is 91 a prime number? Explain.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Translate to French: The weather is nice today.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Translate to Spanish: Where is the nearest train station?",
+        "exact": false,
+        "first_divergence": 8,
+        "prefix_frac": 0.3333333333333333
+      },
+      {
+        "prompt": "Translate to German: I would like a cup of coffee, please.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Rewrite this sentence more formally: hey, can u send me the report asap?",
+        "exact": false,
+        "first_divergence": 13,
+        "prefix_frac": 0.43333333333333335
+      },
+      {
+        "prompt": "Give three synonyms for the word 'happy'.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      }
+    ]
+  },
+  "w8a16_pc": {
+    "exact_matches": 7,
+    "n": 25,
+    "exact_rate": 0.28,
+    "mean_prefix_frac": 0.46820152772584755,
+    "per_prompt": [
+      {
+        "prompt": "What is the capital of France? Answer in one sentence.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Who wrote the novel 'Pride and Prejudice'?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "What is the boiling point of water at sea level in Celsius?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Name the largest planet in our solar system and one fact about it.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "In what year did World War II end?",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Explain what quantization of a neural network means in two sentences.",
+        "exact": false,
+        "first_divergence": 2,
+        "prefix_frac": 0.030303030303030304
+      },
+      {
+        "prompt": "Explain the difference between a process and a thread.",
+        "exact": false,
+        "first_divergence": 12,
+        "prefix_frac": 0.1348314606741573
+      },
+      {
+        "prompt": "Why is the sky blue? Keep it under three sentences.",
+        "exact": false,
+        "first_divergence": 19,
+        "prefix_frac": 0.2753623188405797
+      },
+      {
+        "prompt": "What does a hash table do and why is lookup fast?",
+        "exact": false,
+        "first_divergence": 48,
+        "prefix_frac": 0.43636363636363634
+      },
+      {
+        "prompt": "Summarize what overfitting is in machine learning.",
+        "exact": false,
+        "first_divergence": 20,
+        "prefix_frac": 0.24390243902439024
+      },
+      {
+        "prompt": "Write a Python function that returns the n-th Fibonacci number.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that checks whether a string is a palindrome.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 highest salaries from a table named employees.",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.5465116279069767
+      },
+      {
+        "prompt": "Write a JavaScript function that reverses an array without using reverse().",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that merges two sorted lists into one sorted list.",
+        "exact": false,
+        "first_divergence": 108,
+        "prefix_frac": 0.84375
+      },
+      {
+        "prompt": "What is 17 * 23? Show the calculation.",
+        "exact": false,
+        "first_divergence": 119,
+        "prefix_frac": 0.9444444444444444
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+        "exact": false,
+        "first_divergence": 1,
+        "prefix_frac": 0.0078125
+      },
+      {
+        "prompt": "A box has 3 red and 5 blue balls. What is the probability of drawing a red ball?",
+        "exact": false,
+        "first_divergence": 9,
+        "prefix_frac": 0.0703125
+      },
+      {
+        "prompt": "Solve for x: 3x + 7 = 25.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Is 91 a prime number? Explain.",
+        "exact": false,
+        "first_divergence": 12,
+        "prefix_frac": 0.09375
+      },
+      {
+        "prompt": "Translate to French: The weather is nice today.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Translate to Spanish: Where is the nearest train station?",
+        "exact": false,
+        "first_divergence": 16,
+        "prefix_frac": 0.7619047619047619
+      },
+      {
+        "prompt": "Translate to German: I would like a cup of coffee, please.",
+        "exact": false,
+        "first_divergence": 6,
+        "prefix_frac": 0.3157894736842105
+      },
+      {
+        "prompt": "Rewrite this sentence more formally: hey, can u send me the report asap?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Give three synonyms for the word 'happy'.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      }
+    ]
+  },
+  "w8a8_pc": {
+    "exact_matches": 6,
+    "n": 25,
+    "exact_rate": 0.24,
+    "mean_prefix_frac": 0.39401294631011824,
+    "per_prompt": [
+      {
+        "prompt": "What is the capital of France? Answer in one sentence.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Who wrote the novel 'Pride and Prejudice'?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "What is the boiling point of water at sea level in Celsius?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Name the largest planet in our solar system and one fact about it.",
+        "exact": false,
+        "first_divergence": 37,
+        "prefix_frac": 0.9024390243902439
+      },
+      {
+        "prompt": "In what year did World War II end?",
+        "exact": false,
+        "first_divergence": 11,
+        "prefix_frac": 0.7333333333333333
+      },
+      {
+        "prompt": "Explain what quantization of a neural network means in two sentences.",
+        "exact": false,
+        "first_divergence": 2,
+        "prefix_frac": 0.030303030303030304
+      },
+      {
+        "prompt": "Explain the difference between a process and a thread.",
+        "exact": false,
+        "first_divergence": 10,
+        "prefix_frac": 0.11627906976744186
+      },
+      {
+        "prompt": "Why is the sky blue? Keep it under three sentences.",
+        "exact": false,
+        "first_divergence": 6,
+        "prefix_frac": 0.09523809523809523
+      },
+      {
+        "prompt": "What does a hash table do and why is lookup fast?",
+        "exact": false,
+        "first_divergence": 16,
+        "prefix_frac": 0.13793103448275862
+      },
+      {
+        "prompt": "Summarize what overfitting is in machine learning.",
+        "exact": false,
+        "first_divergence": 20,
+        "prefix_frac": 0.19801980198019803
+      },
+      {
+        "prompt": "Write a Python function that returns the n-th Fibonacci number.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that checks whether a string is a palindrome.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 highest salaries from a table named employees.",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.5465116279069767
+      },
+      {
+        "prompt": "Write a JavaScript function that reverses an array without using reverse().",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that merges two sorted lists into one sorted list.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "What is 17 * 23? Show the calculation.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+        "exact": false,
+        "first_divergence": 36,
+        "prefix_frac": 0.28125
+      },
+      {
+        "prompt": "A box has 3 red and 5 blue balls. What is the probability of drawing a red ball?",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Solve for x: 3x + 7 = 25.",
+        "exact": false,
+        "first_divergence": 17,
+        "prefix_frac": 0.1328125
+      },
+      {
+        "prompt": "Is 91 a prime number? Explain.",
+        "exact": false,
+        "first_divergence": 12,
+        "prefix_frac": 0.09375
+      },
+      {
+        "prompt": "Translate to French: The weather is nice today.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Translate to Spanish: Where is the nearest train station?",
+        "exact": false,
+        "first_divergence": 16,
+        "prefix_frac": 0.26666666666666666
+      },
+      {
+        "prompt": "Translate to German: I would like a cup of coffee, please.",
+        "exact": false,
+        "first_divergence": 6,
+        "prefix_frac": 0.3157894736842105
+      },
+      {
+        "prompt": "Rewrite this sentence more formally: hey, can u send me the report asap?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Give three synonyms for the word 'happy'.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      }
+    ]
+  },
+  "w8a8_pt_dyn": {
+    "exact_matches": 6,
+    "n": 25,
+    "exact_rate": 0.24,
+    "mean_prefix_frac": 0.4840986684503615,
+    "per_prompt": [
+      {
+        "prompt": "What is the capital of France? Answer in one sentence.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Who wrote the novel 'Pride and Prejudice'?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "What is the boiling point of water at sea level in Celsius?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Name the largest planet in our solar system and one fact about it.",
+        "exact": false,
+        "first_divergence": 37,
+        "prefix_frac": 0.9024390243902439
+      },
+      {
+        "prompt": "In what year did World War II end?",
+        "exact": false,
+        "first_divergence": 11,
+        "prefix_frac": 0.6875
+      },
+      {
+        "prompt": "Explain what quantization of a neural network means in two sentences.",
+        "exact": false,
+        "first_divergence": 30,
+        "prefix_frac": 0.45454545454545453
+      },
+      {
+        "prompt": "Explain the difference between a process and a thread.",
+        "exact": false,
+        "first_divergence": 3,
+        "prefix_frac": 0.037037037037037035
+      },
+      {
+        "prompt": "Why is the sky blue? Keep it under three sentences.",
+        "exact": false,
+        "first_divergence": 19,
+        "prefix_frac": 0.36538461538461536
+      },
+      {
+        "prompt": "What does a hash table do and why is lookup fast?",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.3821138211382114
+      },
+      {
+        "prompt": "Summarize what overfitting is in machine learning.",
+        "exact": false,
+        "first_divergence": 5,
+        "prefix_frac": 0.05434782608695652
+      },
+      {
+        "prompt": "Write a Python function that returns the n-th Fibonacci number.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that checks whether a string is a palindrome.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 highest salaries from a table named employees.",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.5402298850574713
+      },
+      {
+        "prompt": "Write a JavaScript function that reverses an array without using reverse().",
+        "exact": false,
+        "first_divergence": 32,
+        "prefix_frac": 0.25
+      },
+      {
+        "prompt": "Write a Python function that merges two sorted lists into one sorted list.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "What is 17 * 23? Show the calculation.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+        "exact": false,
+        "first_divergence": 36,
+        "prefix_frac": 0.28125
+      },
+      {
+        "prompt": "A box has 3 red and 5 blue balls. What is the probability of drawing a red ball?",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Solve for x: 3x + 7 = 25.",
+        "exact": false,
+        "first_divergence": 17,
+        "prefix_frac": 0.1328125
+      },
+      {
+        "prompt": "Is 91 a prime number? Explain.",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.3671875
+      },
+      {
+        "prompt": "Translate to French: The weather is nice today.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Translate to Spanish: Where is the nearest train station?",
+        "exact": false,
+        "first_divergence": 8,
+        "prefix_frac": 0.38095238095238093
+      },
+      {
+        "prompt": "Translate to German: I would like a cup of coffee, please.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Rewrite this sentence more formally: hey, can u send me the report asap?",
+        "exact": false,
+        "first_divergence": 13,
+        "prefix_frac": 0.43333333333333335
+      },
+      {
+        "prompt": "Give three synonyms for the word 'happy'.",
+        "exact": false,
+        "first_divergence": 15,
+        "prefix_frac": 0.8333333333333334
+      }
+    ]
+  },
+  "w8a8_pt_static": {
+    "exact_matches": 7,
+    "n": 25,
+    "exact_rate": 0.28,
+    "mean_prefix_frac": 0.4534156495633684,
+    "per_prompt": [
+      {
+        "prompt": "What is the capital of France? Answer in one sentence.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Who wrote the novel 'Pride and Prejudice'?",
+        "exact": false,
+        "first_divergence": 18,
+        "prefix_frac": 0.8571428571428571
+      },
+      {
+        "prompt": "What is the boiling point of water at sea level in Celsius?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Name the largest planet in our solar system and one fact about it.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "In what year did World War II end?",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Explain what quantization of a neural network means in two sentences.",
+        "exact": false,
+        "first_divergence": 30,
+        "prefix_frac": 0.2542372881355932
+      },
+      {
+        "prompt": "Explain the difference between a process and a thread.",
+        "exact": false,
+        "first_divergence": 3,
+        "prefix_frac": 0.02830188679245283
+      },
+      {
+        "prompt": "Why is the sky blue? Keep it under three sentences.",
+        "exact": false,
+        "first_divergence": 13,
+        "prefix_frac": 0.21311475409836064
+      },
+      {
+        "prompt": "What does a hash table do and why is lookup fast?",
+        "exact": false,
+        "first_divergence": 47,
+        "prefix_frac": 0.3671875
+      },
+      {
+        "prompt": "Summarize what overfitting is in machine learning.",
+        "exact": false,
+        "first_divergence": 81,
+        "prefix_frac": 0.7941176470588235
+      },
+      {
+        "prompt": "Write a Python function that returns the n-th Fibonacci number.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that checks whether a string is a palindrome.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 highest salaries from a table named employees.",
+        "exact": false,
+        "first_divergence": 2,
+        "prefix_frac": 0.023529411764705882
+      },
+      {
+        "prompt": "Write a JavaScript function that reverses an array without using reverse().",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "Write a Python function that merges two sorted lists into one sorted list.",
+        "exact": false,
+        "first_divergence": 0,
+        "prefix_frac": 0.0
+      },
+      {
+        "prompt": "What is 17 * 23? Show the calculation.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+        "exact": false,
+        "first_divergence": 59,
+        "prefix_frac": 0.4609375
+      },
+      {
+        "prompt": "A box has 3 red and 5 blue balls. What is the probability of drawing a red ball?",
+        "exact": false,
+        "first_divergence": 37,
+        "prefix_frac": 0.2890625
+      },
+      {
+        "prompt": "Solve for x: 3x + 7 = 25.",
+        "exact": false,
+        "first_divergence": 4,
+        "prefix_frac": 0.03125
+      },
+      {
+        "prompt": "Is 91 a prime number? Explain.",
+        "exact": false,
+        "first_divergence": 14,
+        "prefix_frac": 0.109375
+      },
+      {
+        "prompt": "Translate to French: The weather is nice today.",
+        "exact": false,
+        "first_divergence": 5,
+        "prefix_frac": 0.21739130434782608
+      },
+      {
+        "prompt": "Translate to Spanish: Where is the nearest train station?",
+        "exact": false,
+        "first_divergence": 20,
+        "prefix_frac": 0.2564102564102564
+      },
+      {
+        "prompt": "Translate to German: I would like a cup of coffee, please.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      },
+      {
+        "prompt": "Rewrite this sentence more formally: hey, can u send me the report asap?",
+        "exact": false,
+        "first_divergence": 13,
+        "prefix_frac": 0.43333333333333335
+      },
+      {
+        "prompt": "Give three synonyms for the word 'happy'.",
+        "exact": true,
+        "first_divergence": null,
+        "prefix_frac": 1.0
+      }
+    ]
+  }
+}

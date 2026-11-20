@@ -1,0 +1,31 @@
+# Model weights / checkpoints (downloaded from Modal Volume, >3 GB each)
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Large binary evaluation arrays (can be regenerated from scripts)
+results/**/*.npy
+results/**/*.npz
+results/_archive_*/
+
+# Virtual environments & Python caches
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Jupyter / IDE / OS
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp files
+*.log
+*.tmp

@@ -1,0 +1,59 @@
+{
+  "fmt": "w8a16_pc",
+  "load_seconds": 121.43008732795715,
+  "fewshot": 0,
+  "limit": null,
+  "tasks": {
+    "hellaswag": {
+      "name": "hellaswag",
+      "alias": "hellaswag",
+      "sample_len": 10042,
+      "acc,none": 0.5482971519617607,
+      "acc_stderr,none": 0.004966448380104211,
+      "acc_norm,none": 0.735610436168094,
+      "acc_norm_stderr,none": 0.00440106326580319
+    },
+    "arc_easy": {
+      "name": "arc_easy",
+      "alias": "arc_easy",
+      "sample_len": 2376,
+      "acc,none": 0.7718855218855218,
+      "acc_stderr,none": 0.008610355160815555,
+      "acc_norm,none": 0.742003367003367,
+      "acc_norm_stderr,none": 0.008977970005203404
+    },
+    "arc_challenge": {
+      "name": "arc_challenge",
+      "alias": "arc_challenge",
+      "sample_len": 1172,
+      "acc,none": 0.4539249146757679,
+      "acc_stderr,none": 0.01454922110517187,
+      "acc_norm,none": 0.47440273037542663,
+      "acc_norm_stderr,none": 0.014592230885298962
+    },
+    "winogrande": {
+      "name": "winogrande",
+      "alias": "winogrande",
+      "sample_len": 1267,
+      "acc,none": 0.6882399368587214,
+      "acc_stderr,none": 0.013018571197638535
+    },
+    "piqa": {
+      "name": "piqa",
+      "alias": "piqa",
+      "sample_len": 1838,
+      "acc,none": 0.7845484221980413,
+      "acc_stderr,none": 0.0095924631156581,
+      "acc_norm,none": 0.7878128400435256,
+      "acc_norm_stderr,none": 0.009539299828174079
+    }
+  },
+  "versions": {
+    "hellaswag": 1.0,
+    "arc_easy": 1.0,
+    "arc_challenge": 1.0,
+    "winogrande": 1.0,
+    "piqa": 1.0
+  },
+  "errors": {}
+}

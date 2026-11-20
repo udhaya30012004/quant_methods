@@ -1,0 +1,19 @@
+{
+  "recipe": "none",
+  "spec": {
+    "note": "baseline copy"
+  },
+  "set": "ppl_wikitext",
+  "n_tokens": 131008,
+  "loss_base": 2.0512425899505615,
+  "loss_quant": 2.0512425899505615,
+  "ppl_base": 7.777559280395508,
+  "ppl_quant": 7.777559280395508,
+  "delta_loss": 0.0,
+  "kl_mean": 0.0,
+  "kl_median": 0.0,
+  "kl_p90": 0.0,
+  "kl_p99": 0.0,
+  "kl_max": 0.0,
+  "top1_agree": 1.0
+}

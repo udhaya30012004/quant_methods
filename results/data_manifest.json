@@ -1,0 +1,37 @@
+{
+  "model_id": "Qwen/Qwen2.5-3B",
+  "window": 2048,
+  "sets": {
+    "ppl_wikitext": {
+      "source": "wikitext-2-raw-v1/test",
+      "shape": [
+        64,
+        2048
+      ],
+      "tokens": 131072,
+      "sha256": "ec7efb602779ece6867937c9e834a3ea0c0f3e2408386d15291f900400fb7987"
+    },
+    "kl_chat": {
+      "source": "ultrachat_200k/test_sft",
+      "shape": [
+        64,
+        2048
+      ],
+      "tokens": 131072,
+      "sha256": "d4375c9fd285c98038f033786c5facf6b415e977b4dc9467d833dad6782eab53"
+    },
+    "calib_chat": {
+      "source": "ultrachat_200k/train_sft (seed=42)",
+      "shape": [
+        512,
+        2048
+      ],
+      "tokens": 1048576,
+      "sha256": "f964af81870b8e08af1ca18c5b7c80891cd607f2b9274cb0bd3ca3e6a076ae86"
+    },
+    "prompts": {
+      "source": "hand-written",
+      "count": 25
+    }
+  }
+}
