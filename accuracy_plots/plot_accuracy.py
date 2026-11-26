@@ -246,61 +246,62 @@ def plot_05_all_methods(lm):
     save(fig, "05_Accuracy_All_Methods_Comparison")
 
 
-# ------------------------------------------------------------------ 06
+# ------------------------------------------------------------------ 06a & 06b
 def plot_06_kl(sim):
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.8, 5.2))
-    x = np.arange(len(Q_ORDER))
-    w = 0.36
+    order4 = ["w8a16_pc", "w8a16_pt", "w8a8_pc", "w8a8_pt_dyn"]
+    x = np.arange(len(order4))
+    w = 0.35
 
-    kl_w = [sim[f]["wiki"]["kl_mean"] for f in Q_ORDER]
-    kl_c = [sim[f]["chat"]["kl_mean"] for f in Q_ORDER]
-    b1 = ax1.bar(x - w / 2, kl_w, width=w, color="#2563eb", edgecolor="#ffffff", lw=0.7, label="WikiText-2")
-    b2 = ax1.bar(x + w / 2, kl_c, width=w, color="#0d9488", edgecolor="#ffffff", lw=0.7, label="UltraChat")
+    # 06a: ONLY Mean KL Divergence (clean bars, no % increase, no Static)
+    fig, ax = plt.subplots(figsize=(9.6, 5.2))
+    kl_w = [sim[f]["wiki"]["kl_mean"] for f in order4]
+    kl_c = [sim[f]["chat"]["kl_mean"] for f in order4]
+    b1 = ax.bar(x - w / 2, kl_w, width=w, color="#2563eb", edgecolor="#ffffff", lw=0.8, label="WikiText-2")
+    b2 = ax.bar(x + w / 2, kl_c, width=w, color="#0d9488", edgecolor="#ffffff", lw=0.8, label="UltraChat")
     fp16 = sim["fp16cast"]["wiki"]["kl_mean"]
-    ax1.axhline(fp16, color="#64748b", ls="--", lw=1.3, label=f"FP16 Cast Noise Floor ({fp16:.5f})")
+    ax.axhline(fp16, color="#64748b", ls="--", lw=1.3, label=f"FP16 Cast Noise Floor ({fp16:.5f})")
+
     for b in b1:
         h = b.get_height()
-        ax1.text(b.get_x() + b.get_width() / 2, h + 0.0003, f"{h:.4f}", ha="center", va="bottom", fontsize=8, fontweight="bold", color="#1e3a8a")
+        ax.text(b.get_x() + b.get_width() / 2, h + 0.00025, f"{h:.4f}", ha="center", va="bottom",
+                fontsize=9.2, fontweight="bold", color="#1e3a8a")
     for b in b2:
         h = b.get_height()
-        ax1.text(b.get_x() + b.get_width() / 2, h + 0.0003, f"{h:.4f}", ha="center", va="bottom", fontsize=8, color="#115e59")
-    ax1.set_xticks(x)
-    ax1.set_xticklabels([SHORT[f] for f in Q_ORDER], fontsize=8.8)
-    ax1.set_ylabel("Mean KL(P_BF16 || P_quant)  ↓ lower is better")
-    ax1.set_ylim(0, 0.0185)
-    ax1.set_title("Mean KL Divergence vs BF16 Baseline")
-    legend(ax1, loc="upper left")
+        ax.text(b.get_x() + b.get_width() / 2, h + 0.00025, f"{h:.4f}", ha="center", va="bottom",
+                fontsize=9.2, fontweight="bold", color="#115e59")
 
-    p99 = [sim[f]["wiki"]["kl_p99"] for f in Q_ORDER]
-    top1 = [sim[f]["wiki"]["top1_agree"] * 100.0 for f in Q_ORDER]
-    bars = ax2.bar(x, p99, width=0.52, color=[COLORS[f] for f in Q_ORDER], edgecolor="#ffffff", lw=0.7, label="P99 KL (Tail Error)")
-    for b in bars:
-        h = b.get_height()
-        ax2.text(b.get_x() + b.get_width() / 2, h + 0.003, f"{h:.3f}", ha="center", va="bottom", fontsize=9, fontweight="bold", color=TEXT_MAIN)
-    ax2.set_xticks(x)
-    ax2.set_xticklabels([SHORT[f] for f in Q_ORDER], fontsize=8.8)
-    ax2.set_ylabel("99th-Percentile Token KL  ↓ lower is better")
-    ax2.set_ylim(0, 0.155)
-    ax2.set_title("Tail KL (P99) & Top-1 Token Agreement (WikiText-2)")
+    ax.set_xticks(x)
+    ax.set_xticklabels([SHORT[f] for f in order4], fontsize=10, fontweight="bold")
+    ax.set_ylabel("Mean KL(P_BF16 || P_quant)  ↓ lower is better")
+    ax.set_ylim(0, 0.0135)
+    ax.set_title("Mean KL Divergence vs BF16 Baseline (Qwen2.5-3B)", pad=12)
+    legend(ax, loc="upper left")
+    save(fig, "06a_Mean_KL_Divergence")
 
-    ax2_r = ax2.twinx()
-    ax2_r.spines["top"].set_visible(False)
-    ax2_r.spines["right"].set_color("#94a3b8")
-    ax2_r.plot(x, top1, color="#0f172a", marker="o", lw=2.0, ms=6.5, label="Top-1 Agreement (%)")
-    for xi, t1 in zip(x, top1):
-        ax2_r.annotate(f"{t1:.1f}%", (xi, t1), xytext=(0, 8), textcoords="offset points",
-                       ha="center", fontsize=8.8, fontweight="bold", color="#0f172a")
-    ax2_r.set_ylabel("Top-1 Token Agreement (%)  ↑ higher is better", color=TEXT_MAIN)
-    ax2_r.tick_params(axis="y", colors=TEXT_MAIN)
-    ax2_r.set_ylim(92.0, 98.5)
-    ax2_r.grid(False)
+    # 06b: ONLY Top-1 Token Agreement (%) — crisp line plot
+    fig, ax = plt.subplots(figsize=(9.6, 5.2))
+    t1_w = [sim[f]["wiki"]["top1_agree"] * 100.0 for f in order4]
+    t1_c = [sim[f]["chat"]["top1_agree"] * 100.0 for f in order4]
+    fp16_t1 = sim["fp16cast"]["wiki"]["top1_agree"] * 100.0
 
-    h1, l1 = ax2.get_legend_handles_labels()
-    h2, l2 = ax2_r.get_legend_handles_labels()
-    ax2.legend(h1 + h2, l1 + l2, facecolor="#ffffff", edgecolor="#cbd5e1", labelcolor=TEXT_MAIN, loc="upper left")
+    ax.plot(x, t1_c, color="#0d9488", marker="s", ms=8, lw=2.5, label="UltraChat")
+    ax.plot(x, t1_w, color="#2563eb", marker="o", ms=8, lw=2.5, label="WikiText-2")
+    ax.axhline(fp16_t1, color="#64748b", ls="--", lw=1.3, label=f"FP16 Cast Ceiling ({fp16_t1:.1f}%)")
 
-    fig.suptitle("Full-Vocabulary KL Divergence & Token Agreement Across FP8 Methods", fontsize=14, fontweight="bold", y=1.02)
-    save(fig, "06_KL_Divergence_and_Token_Agreement")
+    for xi, (vc, vw) in enumerate(zip(t1_c, t1_w)):
+        ax.annotate(f"{vc:.1f}%", (xi, vc), xytext=(0, 10), textcoords="offset points",
+                    ha="center", fontsize=9.5, fontweight="bold", color="#115e59")
+        ax.annotate(f"{vw:.1f}%", (xi, vw), xytext=(0, -16), textcoords="offset points",
+                    ha="center", fontsize=9.5, fontweight="bold", color="#1e3a8a")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([SHORT[f] for f in order4], fontsize=10, fontweight="bold")
+    ax.set_xlim(-0.35, len(order4) - 0.65)
+    ax.set_ylabel("Top-1 Token Agreement vs BF16 (%)  ↑ higher is better")
+    ax.set_ylim(93.5, 98.8)
+    ax.set_title("Top-1 Token Agreement vs BF16 Baseline (Qwen2.5-3B)", pad=12)
+    legend(ax, loc="lower left")
+    save(fig, "06b_Token_Agreement")
 
 
 # ------------------------------------------------------------------ 07
@@ -399,23 +400,49 @@ def plot_08_head_to_head(ppl, sim):
 
 # ------------------------------------------------------------------ 09
 def plot_09_model_size(size):
-    fig, ax = plt.subplots(figsize=(11.0, 5.0))
-    xs = np.arange(len(ALL_ORDER))
-    sizes_gb = [size[f]["quant_bytes"] / 1e9 for f in ALL_ORDER]
-    comps = [size[f]["compression_pct"] for f in ALL_ORDER]
-    bars = ax.bar(xs, sizes_gb, width=0.55, color=[COLORS[f] for f in ALL_ORDER], edgecolor="#ffffff", lw=0.8)
+    order5 = ["bf16", "w8a16_pc", "w8a16_pt", "w8a8_pc", "w8a8_pt_dyn"]
+    fig, ax = plt.subplots(figsize=(10.4, 5.4))
+    ax.set_facecolor("#f8fafc")
+    xs = np.arange(len(order5))
+    sizes_gb = [size[f]["quant_bytes"] / 1e9 for f in order5]
+    comps = [size[f]["compression_pct"] for f in order5]
+    bar_cols = ["#1e293b", "#2563eb", "#60a5fa", "#0d9488", "#d97706"]
 
-    for b, gb, cp, f in zip(bars, sizes_gb, comps, ALL_ORDER):
-        lbl = f"{gb:.2f} GB\n(Baseline)" if f == "bf16" else f"{gb:.2f} GB\n(-{cp:.1f}%)"
-        col = TEXT_MAIN if f == "bf16" else "#0f766e"
-        ax.text(b.get_x() + b.get_width() / 2, gb + 0.14, lbl, ha="center", va="bottom",
-                fontsize=9.5, fontweight="bold", color=col)
+    bars = ax.bar(xs, sizes_gb, width=0.52, color=bar_cols, edgecolor="#ffffff", lw=1.2, zorder=3)
+    ax.axhline(sizes_gb[0], color="#1e293b", ls="--", lw=1.2, alpha=0.55, zorder=2)
+
+    for b, gb, cp, f in zip(bars, sizes_gb, comps, order5):
+        cx = b.get_x() + b.get_width() / 2
+        if f == "bf16":
+            ax.text(cx, gb + 0.38, f"{gb:.2f} GB", ha="center", va="bottom",
+                    fontsize=11.5, fontweight="bold", color="#1e293b", zorder=5)
+            ax.text(cx, gb + 0.12, "(Baseline)", ha="center", va="bottom",
+                    fontsize=9.5, fontweight="bold", color="#475569", zorder=5)
+        else:
+            ax.text(cx, gb + 0.45, f"{gb:.2f} GB", ha="center", va="bottom",
+                    fontsize=11.2, fontweight="bold", color="#0f172a", zorder=5)
+            ax.text(cx, gb + 0.14, f"-{cp:.1f}%", ha="center", va="bottom",
+                    fontsize=10.2, fontweight="bold", color="#0f766e", zorder=5,
+                    bbox=dict(boxstyle="round,pad=0.20", fc="#ccfbf1", ec="#5eead4", lw=0.8))
+
+    # Clean savings callout on the right side
+    ax.annotate(
+        "−2.77 GB saved (~2.6 GiB VRAM freed)",
+        xy=(2.5, sizes_gb[1] + 0.95),
+        xytext=(2.5, 5.55),
+        ha="center",
+        fontsize=9.8,
+        fontweight="bold",
+        color="#0f766e",
+        bbox=dict(boxstyle="round,pad=0.35", fc="#ffffff", ec="#5eead4", lw=1.0),
+        arrowprops=dict(arrowstyle="->", color="#0d9488", lw=1.3),
+    )
 
     ax.set_xticks(xs)
-    ax.set_xticklabels([SHORT[f] for f in ALL_ORDER], fontsize=9.5, fontweight="bold")
-    ax.set_ylabel("Checkpoint Size on Disk (GB)  ↓ smaller is better")
-    ax.set_ylim(0, 7.5)
-    ax.set_title("Model Size & Compression: BF16 vs FP8 PTQ (~45% Reduction Across All FP8 Methods)", pad=12)
+    ax.set_xticklabels([SHORT[f] for f in order5], fontsize=10.5, fontweight="bold")
+    ax.set_ylabel("Checkpoint Size on Disk (GB)  ↓ smaller is better", fontweight="bold")
+    ax.set_ylim(0, 7.3)
+    ax.set_title("Model Size & Compression: BF16 vs FP8 PTQ (Qwen2.5-3B)", pad=14)
     save(fig, "09_Model_Size_and_Compression")
 
 

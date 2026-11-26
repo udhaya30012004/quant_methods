@@ -1,0 +1,55 @@
+FP8 Quantization KL Divergence Report — Qwen2.5-3B (BF16 vs W8A16 Per-Channel vs W8A8 Per-Channel)
+==================================================================================================
+
+Source: Track A full-vocabulary evaluation (131,008 tokens per dataset)
+Files:
+  - E:\quantt\results\summary\summary.md
+  - E:\quantt\results\sim\w8a16_pc__ppl_wikitext.json
+  - E:\quantt\results\sim\w8a8_pc__ppl_wikitext.json
+  - E:\quantt\results\sim\w8a16_pc__kl_chat.json
+  - E:\quantt\results\sim\w8a8_pc__kl_chat.json
+
+
+1. KL Divergence vs BF16 Baseline
+---------------------------------
+Note: Because KL(P_BF16 || P_BF16) = 0.0, the absolute KL difference vs BF16 is
+equal to the quantized model's KL value, while a percentage change relative to
+BF16's KL (0.0) is mathematically undefined (division by zero). Top-1 agreement,
+Loss %, and PPL % vs BF16 are included for well-defined percentage comparisons.
+
+[WikiText-2]
+Format                       Mean KL (d vs BF16)   95% CI               Median KL   p99 KL    Top-1 Agree (vs 100%)   Loss % vs BF16   PPL % vs BF16
+---------------------------  -------------------   ------------------   ---------   -------   ---------------------   --------------   -------------
+BF16 (base)                  0.000000              -                    0.00000     0.0000    100.00%                 0.000%           0.000%
+W8A16 per-channel (w8a16_pc) +0.005814             [0.00556, 0.00613]   0.00348     0.0449     96.16% (-3.84 pp)      +0.137%          +0.282%
+W8A8 per-channel  (w8a8_pc)  +0.010499             [0.01009, 0.01100]   0.00626     0.0816     94.71% (-5.29 pp)      +0.287%          +0.590%
+
+[UltraChat]
+Format                       Mean KL (d vs BF16)   95% CI               Median KL   p99 KL    Top-1 Agree (vs 100%)   Loss % vs BF16   PPL % vs BF16
+---------------------------  -------------------   ------------------   ---------   -------   ---------------------   --------------   -------------
+BF16 (base)                  0.000000              -                    0.00000     0.0000    100.00%                 0.000%           0.000%
+W8A16 per-channel (w8a16_pc) +0.005051             [0.00486, 0.00525]   0.00226     0.0490     96.88% (-3.12 pp)      +0.250%          +0.355%
+W8A8 per-channel  (w8a8_pc)  +0.009280             [0.00899, 0.00958]   0.00423     0.0924     95.63% (-4.37 pp)      +0.525%          +0.749%
+
+Noise floor reference (BF16 -> FP16 cast on WikiText-2):
+  - Mean KL = 0.00067 (top-1 agreement = 98.03%)
+  - W8A16 per-channel is 8.7x the noise floor; W8A8 per-channel is 15.7x the noise floor.
+
+
+2. Direct Comparison: W8A8 Per-Channel vs W8A16 Per-Channel
+-----------------------------------------------------------
+Paired bootstrap significance: p < 0.001 on both datasets.
+
+Metric                                           WikiText-2                    UltraChat
+-----------------------------------------------  ----------------------------  ----------------------------
+Absolute Mean KL diff (W8A8_pc - W8A16_pc)       +0.004685 [+0.00452, +0.00488] +0.004230 [+0.00403, +0.00442]
+Percentage increase (W8A8_pc vs W8A16_pc)        +80.57% (1.81x higher)        +83.74% (1.84x higher)
+Percentage reduction (W8A16_pc vs W8A8_pc)       -44.62%                       -45.58%
+Symmetric % difference (|A - B| / ((A + B) / 2)) 57.43%                        59.03%
+
+
+3. Summary
+----------
+Quantizing activations in addition to weights (W8A8 per-channel/token vs W8A16 per-channel)
+increases mean KL divergence by ~81%-84% (+0.0042 to +0.0047), while both quantized
+recipes remain under 0.75% perplexity increase relative to BF16.

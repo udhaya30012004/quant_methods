@@ -17,6 +17,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# Test and build outputs
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
 
 # Jupyter / IDE / OS
 .ipynb_checkpoints/
